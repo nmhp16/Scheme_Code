@@ -1,5 +1,5 @@
 ;; hello_scheme.scm
-(define (say-hello)
+((define (say-hello)
     (display "Hello, Scheme!"))
 
-(say-hello)
+(say-hello))
