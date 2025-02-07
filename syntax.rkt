@@ -100,6 +100,20 @@ pair3 ; (1), pair3 is a list
 
 ;; passing? function
 (define (passing? grade)
-    (>= grade 70)
+    (>= grade 70) ; No need for if statement
     )
 (passing? 70) ; #t
+
+;; Sum-two function, return sum of two first element of the list
+(define (sum-two xs)
+    (cond ((null? xs) 0)
+         ((null? (cdr xs)) 0)
+         (else (+ (car xs) (cadr xs))))
+    )   
+(sum-two '(1 2 3 4 5)) ; 3
+
+;; or function returns the first true value or #f if all are false
+(or '() '(1 2 3) (< 4 10)) ; #t, or returns the first true value
+
+;; and function returns the first false value or #t if all are true
+(and '() '(1 2 3) (< 4 10)) ; (), and returns the first false value
