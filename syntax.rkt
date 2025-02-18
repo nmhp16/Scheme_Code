@@ -117,3 +117,64 @@ pair3 ; (1), pair3 is a list
 
 ;; and function returns the first false value or #t if all are true
 (and '() '(1 2 3) (< 4 10)) ; (), and returns the first false value
+
+;; Recursive
+; (define (member? element list)
+;     (cond (null? list) #f)
+;         ((equal? element (car list)) #t)
+;         (else (member? element (cdr list))))
+
+(define (member? element list)
+    (if (null? list)
+        #f
+        (or (equal? element (car list)) 
+            (member? element (cdr list)))))
+
+(member? 5 '(4 3 1 2))
+(member? 5 '(4 2 1 2 5))
+
+;; Higher Order Functions
+
+;; Function that takes other function as an argument
+(define (apply-to-all f lst)
+    (if (null? lst)
+        '()
+        (cons (f (car lst)) (apply-to-all f (cdr lst)))))
+
+(apply-to-all square '(1 2 3 4 5)) ;; (1 4 9 16 25)
+
+;; Tail Recursion Example
+(define (sum-list lst) ;; Define a function sum-list that takes a list as input
+    (define (sum-list-helper lst acc) ;; Define a helper function sum-list-helper that takes a list and an accumulator
+        (if (null? lst) ;; If the list is empty
+            acc ;; Return the accumulator
+            (sum-list-helper (cdr lst) (+ (car lst) acc)))) ;; Otherwise, recursively call sum-list-helper on the rest of the list and add the first element to the accumulator
+    (sum-list-helper lst 0)) ;; Call sum-list-helper with the input list and an initial accumulator of 0
+
+(sum-list '(1 2 3 4 5)) ;; Should print 15
+
+;; Macros
+(define-syntax verbose-if
+    (syntax-rules (then else)
+        ((verbose-if condition then exp1 else exp2) ; Pattern
+        (if condition exp1 exp2)) ; Replacement template
+        ((verbose-if condition then exp1)
+        (if condition exp1))))
+
+(verbose-if (> 3 10) then #t else #f)
+
+; let 
+(let ((x1 1) (y1 2))
+    (+ x1 y1)) ; 3
+    ; If perform let in parallel, use let*
+
+; let*
+(let* ((x2 1) (y2 2))
+    (+ x2 y2)) ; 3
+
+(define (index list element)
+    (cond ((null? list) -1)
+        ((equal? element (car list)) 0)
+        (else (+ 1 (index (cdr list) element)))))
+
+
