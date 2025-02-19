@@ -177,4 +177,28 @@ pair3 ; (1), pair3 is a list
         ((equal? element (car list)) 0)
         (else (+ 1 (index (cdr list) element)))))
 
+;; High Order Function is a function that takes a function as an argument and returns a function
+;; Filter
+; (define (filter p xs)
+;     (cond ((null? xs) '())
+;         ((p (car xs)) (cons (car xs) (filter p (cdr xs))))
+;         (else (filter p (cdr xs)))))
 
+; Filter tail recursion
+(define (filter p xs)
+    (define (filter-helper p xs acc) ; accumulator have the same type as return value
+        (cond ((null? xs) acc) ; acc is type of list
+            ((p (car xs)) (filter-helper p (cdr xs) (append acc (list (car xs))))) ;
+            (else (filter-helper p (cdr xs) acc))))
+    (filter-helper p xs '()))
+
+(filter even? '(1 2 3 4 5 6 7 8 9 10))
+;; append
+(append '(1 2 3) '(4 5 6)) ; (1 2 3 4 5 6)
+
+; (define (mystery x)
+;     (let ((x 10)) ; x is local variable
+;     (y x)
+;     (+ x y (let ((z x)) (* 5 z)))))
+
+; (mystery 1)
