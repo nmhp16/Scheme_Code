@@ -186,11 +186,11 @@ pair3 ; (1), pair3 is a list
 
 ; Filter tail recursion
 (define (filter p xs)
-    (define (filter-helper p xs acc) ; accumulator have the same type as return value
+    (define (filter-helper xs acc) ; accumulator have the same type as return value
         (cond ((null? xs) acc) ; acc is type of list
-            ((p (car xs)) (filter-helper p (cdr xs) (append acc (list (car xs))))) ;
-            (else (filter-helper p (cdr xs) acc))))
-    (filter-helper p xs '()))
+            ((p (car xs)) (filter-helper (cdr xs) (append acc (list (car xs))))) ;
+            (else (filter-helper (cdr xs) acc))))
+    (filter-helper xs '()))
 
 (filter even? '(1 2 3 4 5 6 7 8 9 10))
 ;; append
